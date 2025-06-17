@@ -1,0 +1,69 @@
+# =============== #
+# Unity Generated #
+# =============== #
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Mm]emoryCaptures/
+
+# Avoid committing auto-generated VS files
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+
+# Rider
+.idea/
+*.sln.iml
+
+# VS Code
+.vscode/
+
+# Unity Cloud Build
+/[Uu]serSettings/
+
+# Asset meta data should only be ignored when the corresponding asset is also ignored
+!*.meta
+
+# Uncomment if you have local files to ignore
+# e.g. secret configs
+# /Assets/Secret/
+
+# Crashlytics generated files
+crashlytics-build.properties
+
+# Auto-generated JetBrains Rider files
+.idea/
+*.sln.iml
+
+# Unity Shader cache
+*.shadercache
+*.shadervariants
+
+# Visual Studio cache
+.vs/
+
+# Build artifacts
+*.apk
+*.aab
+*.unitypackage
+
+# =================== #
+# OS-Specific Ignores #
+# =================== #
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+desktop.ini
