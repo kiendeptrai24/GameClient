@@ -1,16 +1,26 @@
 ﻿using UnityEngine;
-using SocketIOClient;
-using System.Text.Json;
-using System.Net.Sockets;
 using System.Collections.Generic;
-using Newtonsoft.Json.Bson;
+using Newtonsoft.Json;
+[System.Serializable]
+public class User
+{
+    public string id = "";
+    public string name = "";
+}
 
 public class LobbyManager : Singleton<LobbyManager>
 {
+
     SocketIOUnity socket;
-    private List<string> strings = new List<string>();
+    private List<User> userList;
+    private LobbyUI lobbyUI;
+    private void Awake()
+    {
+        lobbyUI = GetComponent<LobbyUI>();
+    }
     void Start()
     {
+
         if (NetworkManager.socket == null)
         {
             Debug.LogError("❌ Socket not initialized");
@@ -48,9 +58,12 @@ public class LobbyManager : Singleton<LobbyManager>
         {
             Debug.Log("❌ Room not found: " + response.GetValue<string>());
         });
-        socket.On("get_user", response =>
+        socket.On("room_getuser", response =>
         {
-            strings = response.GetValue<List<string>>();
+            var jsonString = response.GetValue<string>();
+            Debug.Log(jsonString.ToString());
+            userList = JsonConvert.DeserializeObject<List<User>>(jsonString);
+            lobbyUI.ShowListUserOnRoom(userList);
 
         });
 
@@ -60,6 +73,7 @@ public class LobbyManager : Singleton<LobbyManager>
     public void LeaveLobby(string roomId) => socket.Emit("leave_room", roomId);
     public void DestroyRoom(string roomId) => socket.Emit("destroy_room", roomId);
     public void KickPlayerLobby(string roomId) => socket.Emit("kickplayer_room", roomId);
-    public List<string> GetUserOnRoom() => strings;
+    public void GetUsersOnLobby(string roomId) => socket.Emit("getuser_room", roomId);
+    public List<User> GetUserOnRoom() => userList;
 
 }

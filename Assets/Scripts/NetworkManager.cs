@@ -1,12 +1,6 @@
 ﻿using UnityEngine;
 using System;
-using System.Text.Json.Nodes;
 using SocketIOClient;
-using UnityEngine.UIElements;
-using Newtonsoft.Json;
-using UnityEngine;
-using SocketIOClient;
-using System;
 
 public class NetworkManager : MonoBehaviour
 {
@@ -23,7 +17,7 @@ public class NetworkManager : MonoBehaviour
     [ContextMenu("Connect to server")]
     public void OnConnectToServer()
     {
-        var uri = new Uri("https://perfectly-kind-toucan.ngrok-free.app");
+        var uri = new Uri("http://localhost:3020");
         socket = new SocketIOUnity(uri, new SocketIOOptions
         {
             Transport = SocketIOClient.Transport.TransportProtocol.WebSocket
