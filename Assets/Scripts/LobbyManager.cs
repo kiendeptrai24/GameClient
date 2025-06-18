@@ -2,10 +2,13 @@
 using SocketIOClient;
 using System.Text.Json;
 using System.Net.Sockets;
+using System.Collections.Generic;
+using Newtonsoft.Json.Bson;
 
 public class LobbyManager : Singleton<LobbyManager>
 {
     SocketIOUnity socket;
+    private List<string> strings = new List<string>();
     void Start()
     {
         if (NetworkManager.socket == null)
@@ -23,30 +26,40 @@ public class LobbyManager : Singleton<LobbyManager>
 
         socket.On("player_joined", response =>
         {
-            Debug.Log("👤 Player joined: " + response.GetValue<string>());
+            Debug.Log("➕ Player joined: " + response.GetValue<string>());
         });
+
         socket.On("room_exists", response =>
         {
-            Debug.Log("👤 Room: " + response.GetValue<string>());
+            Debug.Log("ℹ️ Room exists: " + response.GetValue<string>());
         });
+
         socket.On("player_left", response =>
         {
-            Debug.Log("👤 Room " + response.GetValue<string>());
+            Debug.Log("➖ Player left: " + response.GetValue<string>());
         });
+
         socket.On("room_destroyed", response =>
         {
-            Debug.Log("👤 Room: " + response.GetValue<string>());
+            Debug.Log("💥 Room destroyed: " + response.GetValue<string>());
         });
 
-        // Gửi yêu cầu tạo phòng
+        socket.On("room_not_found", response =>
+        {
+            Debug.Log("❌ Room not found: " + response.GetValue<string>());
+        });
+        socket.On("get_user", response =>
+        {
+            strings = response.GetValue<List<string>>();
 
-        // Nếu muốn tham gia phòng thì dùng:
-        // socket.Emit("join_room", roomId);
+        });
+
     }
     public void CreateLobby(string roomId) => socket.Emit("create_room", roomId);
     public void JoinLobby(string roomId) => socket.Emit("join_room", roomId);
     public void LeaveLobby(string roomId) => socket.Emit("leave_room", roomId);
     public void DestroyRoom(string roomId) => socket.Emit("destroy_room", roomId);
     public void KickPlayerLobby(string roomId) => socket.Emit("kickplayer_room", roomId);
+    public List<string> GetUserOnRoom() => strings;
 
 }

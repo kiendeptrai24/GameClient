@@ -16,24 +16,28 @@ public class NetworkManager : MonoBehaviour
     {
         if (socket == null)
         {
-            var uri = new Uri("https://5943-125-235-185-219.ngrok-free.app");
-            socket = new SocketIOUnity(uri, new SocketIOOptions
-            {
-                Transport = SocketIOClient.Transport.TransportProtocol.WebSocket
-            });
-
-            socket.OnConnected += (sender, e) =>
-            {
-                Debug.Log("✅ Connected to server");
-            };
-
-            socket.OnDisconnected += (sender, e) =>
-            {
-                Debug.Log("🔌 Disconnected from server");
-            };
-
-            socket.Connect();
-            DontDestroyOnLoad(gameObject);
+            OnConnectToServer();
         }
+        DontDestroyOnLoad(gameObject);
+    }
+    [ContextMenu("Connect to server")]
+    public void OnConnectToServer()
+    {
+        var uri = new Uri("https://perfectly-kind-toucan.ngrok-free.app");
+        socket = new SocketIOUnity(uri, new SocketIOOptions
+        {
+            Transport = SocketIOClient.Transport.TransportProtocol.WebSocket
+        });
+        socket.OnConnected += (sender, e) =>
+        {
+            Debug.Log("✅ Connected to server");
+        };
+
+        socket.OnDisconnected += (sender, e) =>
+        {
+            Debug.Log("🔌 Disconnected from server");
+        };
+
+        socket.Connect();
     }
 }
