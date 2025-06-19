@@ -22,7 +22,7 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
                 if (_instance == null)
                 {
                     // Tìm instance trong scene
-                    _instance = FindObjectOfType<T>();
+                    _instance = FindFirstObjectByType<T>();
 
                     if (_instance == null)
                     {

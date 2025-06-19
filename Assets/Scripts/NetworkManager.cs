@@ -17,7 +17,8 @@ public class NetworkManager : MonoBehaviour
     [ContextMenu("Connect to server")]
     public void OnConnectToServer()
     {
-        var uri = new Uri("http://localhost:3020");
+        Debug.Log("contectting to server ...");
+        var uri = new Uri("https://perfectly-kind-toucan.ngrok-free.app");
         socket = new SocketIOUnity(uri, new SocketIOOptions
         {
             Transport = SocketIOClient.Transport.TransportProtocol.WebSocket
