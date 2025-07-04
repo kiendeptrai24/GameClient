@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
 using System;
 using SocketIOClient;
+using System.Collections.Generic;
 
 public class NetworkManager : MonoBehaviour
 {
     public static SocketIOUnity socket;
-
+    public Dictionary<string, User> User = new Dictionary<string, User>();
+    public User Owner;
     private void Awake()
     {
         if (socket == null)
@@ -32,6 +34,11 @@ public class NetworkManager : MonoBehaviour
         {
             Debug.Log("🔌 Disconnected from server");
         };
+        socket.On("user_login", response =>
+        {
+            Debug.Log("🏠 User login succsecful: " + response.GetValue<string>());
+            //User user = 
+        });
 
         socket.Connect();
     }

@@ -2,25 +2,38 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
-using static UnityEngine.UIElements.UxmlAttributeDescription;
 
-public class LobbyUI : MonoBehaviour
+public class LobbyUI : KienBehaviour
 {
     [Header("Button Handler")]
     [SerializeField] private Button OnCreateRoomBtn;
     [SerializeField] private Button OnJoinRoomBtn;
     [SerializeField] private Button OnLeaveRoomBtn;
+
     [SerializeField] private Button OnReloadRoomBtn;
+    [SerializeField] private Button OnReloadUserBtn;
+    [SerializeField] private Button OnSendMessege;
+
     [Space]
     [SerializeField] private TMP_InputField input;
+    [SerializeField] private TMP_InputField message;
     [Space]
+
+    [Header("Messege")]
     [SerializeField] private RectTransform userContent;
     [SerializeField] private UserOnRoomUI userPrefab;
+
+    [Header("Messege")]
     [SerializeField] private RectTransform roomContent;
     [SerializeField] private RoomUI roomPrefab;
 
-    private void Start()
+    [Header("Messege")]
+    [SerializeField] private RectTransform messegeContent;
+    [SerializeField] private MessegeUI messegePrefab;
+
+    protected override void Start()
     {
+        base.Start();
         OnCreateRoomBtn.onClick.AddListener(async () =>
         {
             LobbyManager.Instance.CreateLobby(input.text);
@@ -37,7 +50,17 @@ public class LobbyUI : MonoBehaviour
         OnReloadRoomBtn.onClick.AddListener(async () =>
         {
             Debug.Log($"Update Thread: {System.Threading.Thread.CurrentThread.ManagedThreadId}");
+            ShowListRoom(await LobbyManager.Instance.WaitForRoomListAsync());
+        });
+        OnReloadUserBtn.onClick.AddListener(async () =>
+        {
+            Debug.Log($"Update Thread: {System.Threading.Thread.CurrentThread.ManagedThreadId}");
             ShowListUserOnRoom(await LobbyManager.Instance.WaitForUserListAsync(input.text));
+        });
+        OnSendMessege.onClick.AddListener(async () =>
+        {
+            Debug.Log($"Update Thread: {System.Threading.Thread.CurrentThread.ManagedThreadId}");
+            ShowListMessege(await LobbyManager.Instance.WaitForUserChatAsync(message.text));
         });
     }
     public void ShowListUserOnRoom(List<User> users)
@@ -53,17 +76,50 @@ public class LobbyUI : MonoBehaviour
             newUser.id.text = $"userId: {user.id} name: {user.name}";
         }
     }
-    public void ShowListRoom(Dictionary<string, List<User>> rooms)
+    public void ShowListRoom(List<Room> rooms)
     {
         foreach (Transform child in roomContent)
         {
             Destroy(child.gameObject);
         }
 
-        foreach (var user in rooms)
+        foreach (var room in rooms)
         {
             RoomUI newUser = Instantiate(roomPrefab, roomContent);
-            
+            newUser.SetData(room);
+      
         }
+    }
+    public void ShowListMessege(Messege message)
+    {
+
+
+        MessegeUI newUser = Instantiate(messegePrefab, messegeContent);
+        newUser.SetData(message);
+
+        
+    }
+
+    protected override void LoadComponent()
+    {
+        OnCreateRoomBtn = GameObject.Find("Create").GetComponent<Button>();
+        OnJoinRoomBtn = GameObject.Find("Join").GetComponent<Button>();
+        OnLeaveRoomBtn = GameObject.Find("Leave").GetComponent<Button>();
+
+        OnSendMessege = GameObject.Find("SendMessege").GetComponent<Button>();
+
+        OnReloadRoomBtn = GameObject.Find("ReloadRoom").GetComponent<Button>();
+        OnReloadUserBtn = GameObject.Find("ReloadUser").GetComponent<Button>();
+
+        input = GameObject.Find("input").GetComponent<TMP_InputField>();
+        message = GameObject.Find("inputMessege").GetComponent<TMP_InputField>();
+
+        userContent = GameObject.Find("UserContent").GetComponent<RectTransform>();
+        roomContent = GameObject.Find("RoomContent").GetComponent<RectTransform>();
+        messegeContent = GameObject.Find("MessegeContent").GetComponent<RectTransform>();
+
+        //OnReloadUserBtn = GameObject.Find("ReloadUser").GetComponent<UserOnRoomUI>();
+        //OnReloadUserBtn = GameObject.Find("ReloadUser").GetComponent<RoomUI>();
+
     }
 }

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4544529508783221351}
   - component: {fileID: 5850531845195235943}
   - component: {fileID: 1121433569315777700}
-  - component: {fileID: 1852144520795123915}
+  - component: {fileID: -6778779990084830820}
   m_Layer: 5
   m_Name: UserUI
   m_TagString: Untagged
@@ -78,7 +78,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &1852144520795123915
+--- !u!114 &-6778779990084830820
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -87,11 +87,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 2367321837784404255}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 734acb14bb7e0734b8c1cdf7ed3d6ff4, type: 3}
+  m_Script: {fileID: 11500000, guid: c0826933884fc114ea47beefb6c32296, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   id: {fileID: 3913635852079798522}
-  sprite: {fileID: 1121433569315777700}
+  sprite: {fileID: 6033757068559316365}
   Button: {fileID: 0}
 --- !u!1 &4538182749894043792
 GameObject:
