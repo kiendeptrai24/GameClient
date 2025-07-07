@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2606367269508614372}
   - component: {fileID: 2581133685804728573}
   - component: {fileID: 7034924601949824514}
+  - component: {fileID: 4027946840165794752}
   m_Layer: 5
   m_Name: RoomUI
   m_TagString: Untagged
@@ -96,7 +97,20 @@ MonoBehaviour:
   maxMembers: {fileID: 4014706407617830193}
   mode: {fileID: 4014706407617830193}
   sprite: {fileID: 6042974279411967228}
-  JoinRoom: {fileID: 2446490885524481521}
+  joinRoombtn: {fileID: 0}
+--- !u!114 &4027946840165794752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 306582820006936534}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5218b5124b32d2041831cafd9b58af02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  originalPrefab: {fileID: 306582820006936534}
 --- !u!1 &564113387736174519
 GameObject:
   m_ObjectHideFlags: 0

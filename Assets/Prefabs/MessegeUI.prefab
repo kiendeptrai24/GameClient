@@ -225,6 +225,7 @@ GameObject:
   - component: {fileID: 4213745804436388013}
   - component: {fileID: 3235839098579955523}
   - component: {fileID: 9108512099591871567}
+  - component: {fileID: 7892974527964101553}
   m_Layer: 5
   m_Name: MessegeUI
   m_TagString: Untagged
@@ -306,6 +307,19 @@ MonoBehaviour:
   userName: {fileID: 2705811795763053213}
   messege: {fileID: 5866680179023097918}
   timestamp: {fileID: 939090100879037976}
+--- !u!114 &7892974527964101553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4782840525642215987}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5218b5124b32d2041831cafd9b58af02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  originalPrefab: {fileID: 4782840525642215987}
 --- !u!1 &5132574469970562657
 GameObject:
   m_ObjectHideFlags: 0
@@ -476,8 +490,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -23.5, y: 16.329}
-  m_SizeDelta: {x: 109.536, y: -32.659}
+  m_AnchoredPosition: {x: -23.5, y: -0.00019645691}
+  m_SizeDelta: {x: 175.038, y: -0.00046921}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!222 &6770096865774030006
 CanvasRenderer:

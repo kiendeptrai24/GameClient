@@ -2,6 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 public class LobbyUI : KienBehaviour
 {
@@ -17,6 +18,8 @@ public class LobbyUI : KienBehaviour
     [Space]
     [SerializeField] private TMP_InputField input;
     [SerializeField] private TMP_InputField message;
+    [SerializeField] private TMP_Dropdown maxMember;
+    [SerializeField] private TMP_Dropdown mode;
     [Space]
 
     [Header("Messege")]
@@ -34,33 +37,29 @@ public class LobbyUI : KienBehaviour
     protected override void Start()
     {
         base.Start();
-        OnCreateRoomBtn.onClick.AddListener(async () =>
+        OnCreateRoomBtn.onClick.AddListener(() =>
         {
-            LobbyManager.Instance.CreateLobby(input.text);
-            ShowListUserOnRoom(await LobbyManager.Instance.WaitForUserListAsync(input.text));
-            Debug.Log($"Update Thread: {System.Threading.Thread.CurrentThread.ManagedThreadId}");
+            RoomRequestDTO roomRequest = new RoomRequestDTO(input.text,mode.name,maxMember.value + 1);
+            string jsonrequest = JsonConvert.SerializeObject(roomRequest);
+            LobbyManager.Instance.CreateLobby(jsonrequest);
         });
-        OnJoinRoomBtn.onClick.AddListener(async () =>
+        OnJoinRoomBtn.onClick.AddListener(() =>
         {
             LobbyManager.Instance.JoinLobby(input.text);
-            ShowListUserOnRoom(await LobbyManager.Instance.WaitForUserListAsync(input.text));
-            Debug.Log($"Update Thread: {System.Threading.Thread.CurrentThread.ManagedThreadId}");
+            LobbyManager.Instance.RefreshRoomList();
         });
         OnLeaveRoomBtn.onClick.AddListener(() => LobbyManager.Instance.LeaveLobby(input.text));
-        OnReloadRoomBtn.onClick.AddListener(async () =>
+        OnReloadRoomBtn.onClick.AddListener(() =>
         {
-            Debug.Log($"Update Thread: {System.Threading.Thread.CurrentThread.ManagedThreadId}");
-            ShowListRoom(await LobbyManager.Instance.WaitForRoomListAsync());
+            LobbyManager.Instance.RefreshRoomList();
         });
         OnReloadUserBtn.onClick.AddListener(async () =>
         {
-            Debug.Log($"Update Thread: {System.Threading.Thread.CurrentThread.ManagedThreadId}");
             ShowListUserOnRoom(await LobbyManager.Instance.WaitForUserListAsync(input.text));
         });
         OnSendMessege.onClick.AddListener(async () =>
         {
-            Debug.Log($"Update Thread: {System.Threading.Thread.CurrentThread.ManagedThreadId}");
-            ShowListMessege(await LobbyManager.Instance.WaitForUserChatAsync(message.text));
+            ShowMessege(await LobbyManager.Instance.WaitForUserChatAsync(message.text));
         });
     }
     public void ShowListUserOnRoom(List<User> users)
@@ -87,17 +86,13 @@ public class LobbyUI : KienBehaviour
         {
             RoomUI newUser = Instantiate(roomPrefab, roomContent);
             newUser.SetData(room);
-      
         }
     }
-    public void ShowListMessege(Messege message)
+    public void ShowMessege(Messege message)
     {
-
-
+        Debug.Log("messege");
         MessegeUI newUser = Instantiate(messegePrefab, messegeContent);
-        newUser.SetData(message);
-
-        
+        newUser.SetData(message);   
     }
 
     protected override void LoadComponent()

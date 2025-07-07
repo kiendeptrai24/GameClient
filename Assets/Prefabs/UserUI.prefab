@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5850531845195235943}
   - component: {fileID: 1121433569315777700}
   - component: {fileID: -6778779990084830820}
+  - component: {fileID: 1098772732560526427}
   m_Layer: 5
   m_Name: UserUI
   m_TagString: Untagged
@@ -93,6 +94,19 @@ MonoBehaviour:
   id: {fileID: 3913635852079798522}
   sprite: {fileID: 6033757068559316365}
   Button: {fileID: 0}
+--- !u!114 &1098772732560526427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2367321837784404255}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5218b5124b32d2041831cafd9b58af02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  originalPrefab: {fileID: 2367321837784404255}
 --- !u!1 &4538182749894043792
 GameObject:
   m_ObjectHideFlags: 0

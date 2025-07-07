@@ -37,6 +37,17 @@ public class Room
     public string mode;
     public string status;
     public int max;
-
 }
-
+[System.Serializable]
+public class RoomRequestDTO
+{
+    public string roomId;
+    public string mode;
+    public int max;
+    public RoomRequestDTO(string id, string mode, int max)
+    {
+        this.roomId = id;
+        this.mode = mode;
+        this.max = max;
+    }
+}
