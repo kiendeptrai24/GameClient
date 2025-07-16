@@ -20,18 +20,19 @@ public class LobbyManager : Singleton<LobbyManager>
     SocketIOUnity socket;
     private List<User> userList;
     private List<Room> rooms;
-    private LobbyUI lobbyUI;
+    private LobbySellectedUI lobbyUI;
 
     [Header("Lobby Info")]
+    [SerializeField] private bool autoRefesh;
     [SerializeField] private float refeshRoomListCoolDown = 2;
     private Coroutine refreshCoroutine;
 
     [SerializeField]
-    private void Awake()
+    protected override void Awake()
     {
-        lobbyUI = GetComponent<LobbyUI>();
+        lobbyUI = GetComponent<LobbySellectedUI>();
     }
-    void Start()
+    protected override void Start()
     {
         AddListenerEvent();
     }
@@ -45,6 +46,12 @@ public class LobbyManager : Singleton<LobbyManager>
 
         socket = NetworkManager.socket;
 
+        listenerEventSockeIO();
+
+    }
+
+    private void listenerEventSockeIO()
+    {
         socket.On("room_created", response =>
         {
             Debug.Log("Room created: " + response.GetValue<string>());
@@ -74,27 +81,27 @@ public class LobbyManager : Singleton<LobbyManager>
         {
             Debug.Log("❌ Room not found: " + response.GetValue<string>());
         });
-        
-        socket.On("chat_messege", response =>
-        {
-            try
-            {
-                var json = response.GetValue<string>();
-                Messege messege = JsonConvert.DeserializeObject<Messege>(json);
 
-                Debug.Log($"Received from: {messege.userId} - {messege.username}:{messege.messege} - {messege.timestamp}");
+        //socket.On("chat_messege", response =>
+        //{
+        //    try
+        //    {
+        //        var json = response.GetValue<string>();
+        //        Messege messege = JsonConvert.DeserializeObject<Messege>(json);
 
-                MainThreadDispatcher.RunOnMainThread(() =>
-                {
-                    lobbyUI.ShowMessege(messege);
-                });
-            }
-            catch (Exception ex)
-            {
-                Debug.LogError("Error in chat_messege handler: " + ex.Message);
-            }
-        });
-        
+        //        Debug.Log($"Received from: {messege.userId} - {messege.username}:{messege.messege} - {messege.timestamp}");
+
+        //        MainThreadDispatcher.RunOnMainThread(() =>
+        //        {
+        //            lobbyUI.ShowMessege(messege);
+        //        });
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Debug.LogError("Error in chat_messege handler: " + ex.Message);
+        //    }
+        //});
+
         socket.On("room_list", response =>
         {
             var jsonString = response.GetValue<string>();
@@ -103,11 +110,11 @@ public class LobbyManager : Singleton<LobbyManager>
 
         });
         refreshCoroutine = StartCoroutine(AutoRefreshRoomList(refeshRoomListCoolDown));
-
     }
+
     IEnumerator AutoRefreshRoomList(float refeshRoomListCoolDown)
     {
-        while (true)
+        while (autoRefesh)
         {
             RefreshRoomList();
             yield return new WaitForSeconds(refeshRoomListCoolDown);
@@ -117,7 +124,7 @@ public class LobbyManager : Singleton<LobbyManager>
 
     public void RefreshRoomList()
     {
-        //Debug.Log("🔁 Đang cập nhật danh sách phòng...");
+        //Debug.Log("Đang cập nhật danh sách phòng...");
         socket.Emit("checklist_room");
     }
     public async Task<List<User>> WaitForUserListAsync(string roomId)
@@ -158,26 +165,6 @@ public class LobbyManager : Singleton<LobbyManager>
 
         return await tcs.Task;
     }
-    //public async Task<List<Room>> WaitForRoomListAsync()
-    //{
-    //    var tcs = new TaskCompletionSource<List<Room>>();
-
-    //    Action<SocketIOResponse> handler = null;
-    //    handler = (response) =>
-    //    {
-
-    //        var jsonString = response.GetValue<string>();
-    //        Debug.Log(jsonString);
-    //        List<Room> rooms = JsonConvert.DeserializeObject<List<Room>>(jsonString);
-           
-    //        tcs.TrySetResult(rooms);
-    //    };
-
-    //    socket.On("room_list", handler);
-    //    socket.Emit("checklist_room");
-        
-    //    return await tcs.Task;
-    //}
 
     public void CreateLobby(string room) => socket.Emit("create_room", room);
     public void JoinLobby(string roomId) => socket.Emit("join_room", roomId);

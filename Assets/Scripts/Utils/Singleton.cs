@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 
-public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
+public class Singleton<T> : KienBehaviour where T : KienBehaviour
 {
     private static T _instance;
     private static readonly object _lock = new object();
