@@ -69,21 +69,18 @@ public class LobbyManager : Singleton<LobbyManager>
 
         socket.On("player_left", response =>
         {
-            Debug.Log("➖ Player left: " + response.GetValue<string>());
+            Debug.Log("Player left: " + response.GetValue<string>());
         });
 
         socket.On("room_destroyed", response =>
         {
-            Debug.Log("💥 Room destroyed: " + response.GetValue<string>());
+            Debug.Log("Room destroyed: " + response.GetValue<string>());
         });
 
         socket.On("room_not_found", response =>
         {
-            Debug.Log("❌ Room not found: " + response.GetValue<string>());
+            Debug.Log("Room not found: " + response.GetValue<string>());
         });
-
-
-
         socket.On("room_list", response =>
         {
             var jsonString = response.GetValue<string>();
@@ -105,7 +102,7 @@ public class LobbyManager : Singleton<LobbyManager>
 
 
     public void RefreshRoomList() => socket.Emit("checklist_room");
-    
+
     public async Task<List<User>> WaitForUserListAsync(string roomId)
     {
         var tcs = new TaskCompletionSource<List<User>>();
@@ -134,6 +131,6 @@ public class LobbyManager : Singleton<LobbyManager>
     public void GetUsersOnLobby(string roomId) => socket.Emit("getuser_room", roomId);
     public void ChatOnLobby(string messege) => socket.Emit("chat_messege", messege);
 
-    public List<User> GetUserOnRooms() => userList;    
+    public List<User> GetUserOnRooms() => userList;
     public List<Room> GetAllRooms() => rooms;
 }

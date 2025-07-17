@@ -16,8 +16,6 @@ public class ChatManager_UI : Singleton<ChatManager_UI>
         base.Awake();
         LoadComponent();
     }
-
-
     protected override void Start()
     {
         base.Start();

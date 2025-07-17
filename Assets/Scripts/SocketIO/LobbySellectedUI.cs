@@ -9,13 +9,13 @@ using static Unity.Cinemachine.CinemachineSplineRoll;
 
 public static class CharacterGroups
 {
-    public const string Space= " ";
+    public const string Space = " ";
     public const string LowercaseLetters = "abcdefghijklmnopqrstuvwxyz" + Space;
     public const string UppercaseLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + Space;
     public const string Digits = "0123456789";
     public const string SpecialCharacters = "@._-!#$%&*()+=<>?/\\|~^" + Space;
     public const string LettersAndDigits = LowercaseLetters + UppercaseLetters + Digits + Space;
-    public const string AllCharacters = LowercaseLetters + UppercaseLetters + Digits + SpecialCharacters + Space;  
+    public const string AllCharacters = LowercaseLetters + UppercaseLetters + Digits + SpecialCharacters + Space;
 }
 
 public class LobbySellectedUI : Singleton<LobbySellectedUI>
@@ -35,14 +35,14 @@ public class LobbySellectedUI : Singleton<LobbySellectedUI>
     private List<RoomUI> roomList = new List<RoomUI>();
 
     private RoomUI currentRoom;
-    
+
 
 
     [SerializeField] private Button OnLeaveRoomBtn;
     [SerializeField] private Button OnReloadUserBtn;
     [SerializeField] private Button OnSendMessege;
-    
-    
+
+
     [Space]
     [SerializeField] private RectTransform userContent;
     [SerializeField] private UserOnRoomUI userPrefab;
@@ -56,9 +56,9 @@ public class LobbySellectedUI : Singleton<LobbySellectedUI>
         });
         OnJoinRoomBtn.onClick.AddListener(() =>
         {
-            LobbyManager.Instance.JoinLobby(currentRoom.id.ToString());
+            LobbyManager.Instance.JoinLobby(currentRoom.data.id.ToString());
             LobbyManager.Instance.RefreshRoomList();
-            SceneLoader.Instance.LoadScene(SceneName.GamePlay);
+            SceneLoader.Instance.LoadScene(SceneName.LobbyReady);
         });
         OnReloadRoomBtn.onClick.AddListener(() => LobbyManager.Instance.RefreshRoomList());
 
@@ -104,6 +104,7 @@ public class LobbySellectedUI : Singleton<LobbySellectedUI>
 
     public void RoomSelected(RoomUI room)
     {
+        Debug.Log($"Room selected:)");
         currentRoom?.HideFocus();
         currentRoom = room;
         if (currentRoom == null) return;
@@ -167,5 +168,5 @@ public class LobbySellectedUI : Singleton<LobbySellectedUI>
             newUser.id.text = $"userId: {user.id} name: {user.name}";
         }
     }
-  
+
 }

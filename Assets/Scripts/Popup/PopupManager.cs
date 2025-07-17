@@ -12,12 +12,20 @@ public class PopupManager : Singleton<PopupManager>
     {
         base.Awake();
         RegisterAllPopups();
+        DontDestroyOnLoad(gameObject);
     }
 
     private void RegisterAllPopups()
     {
-        // Tự động tìm và đăng ký tất cả popup trong scene
-        var allPopups = FindObjectsOfType<MonoBehaviour>().OfType<IPopup>();
+        var allMonoBehaviours = FindObjectsByType<MonoBehaviour>(
+            FindObjectsInactive.Include,
+            FindObjectsSortMode.None
+        );
+
+        var allPopups = allMonoBehaviours
+            .Where(m => m is IPopup)
+            .Cast<IPopup>()
+            .ToList();
         foreach (var popup in allPopups)
         {
             Type popupType = popup.GetType();

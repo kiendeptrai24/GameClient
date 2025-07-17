@@ -30,7 +30,6 @@ public class Singleton<T> : KienBehaviour where T : KienBehaviour
                         GameObject singletonObject = new GameObject();
                         _instance = singletonObject.AddComponent<T>();
                         singletonObject.name = typeof(T).ToString() + " (Singleton)";
-                        DontDestroyOnLoad(singletonObject);
                     }
                 }
 

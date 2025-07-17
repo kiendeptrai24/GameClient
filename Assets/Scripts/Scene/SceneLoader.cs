@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 public enum SceneName
@@ -9,7 +10,7 @@ public enum SceneName
     GamePlay,
     Options,
     Lobby,
-    LobbyReady
+    LobbyReady,
 }
 
 public class SceneLoader : Singleton<SceneLoader>
@@ -23,10 +24,17 @@ public class SceneLoader : Singleton<SceneLoader>
     {
         SceneManager.LoadScene(scene.ToString());
     }
-
     public void LoadSceneAsync(SceneName scene)
     {
         StartCoroutine(LoadSceneAsyncCoroutine(scene));
+    }
+    public async Task LoadScenes(SceneName sceneName)
+    {
+        var asyncOp = SceneManager.LoadSceneAsync(sceneName.ToString());
+        while (!asyncOp.isDone)
+        {
+            await Task.Yield();
+        }
     }
 
     private IEnumerator LoadSceneAsyncCoroutine(SceneName scene)

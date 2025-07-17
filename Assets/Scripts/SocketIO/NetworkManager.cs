@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 
 public class NetworkManager : Singleton<NetworkManager>
 {
-
+    public bool IsConnected { get; private set; } = false;
     public static SocketIOUnity socket;
     [SerializeField] private bool isConnect = false;
     [SerializeField] private string apiServer = "https://perfectly-kind-toucan.ngrok-free.app";
@@ -38,6 +38,7 @@ public class NetworkManager : Singleton<NetworkManager>
         socket.OnConnected += (sender, e) =>
         {
             Debug.Log("Connected to server");
+            IsConnected = true;
         };
 
         socket.OnDisconnected += (sender, e) =>
