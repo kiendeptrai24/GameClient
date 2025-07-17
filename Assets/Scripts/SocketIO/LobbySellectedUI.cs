@@ -9,12 +9,13 @@ using static Unity.Cinemachine.CinemachineSplineRoll;
 
 public static class CharacterGroups
 {
-    public const string LowercaseLetters = "abcdefghijklmnopqrstuvwxyz";
-    public const string UppercaseLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    public const string Space= " ";
+    public const string LowercaseLetters = "abcdefghijklmnopqrstuvwxyz" + Space;
+    public const string UppercaseLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + Space;
     public const string Digits = "0123456789";
-    public const string SpecialCharacters = "@._-!#$%&*()+=<>?/\\|~^";
-    public const string LettersAndDigits = LowercaseLetters + UppercaseLetters + Digits;
-    public const string AllCharacters = LowercaseLetters + UppercaseLetters + Digits + SpecialCharacters;  
+    public const string SpecialCharacters = "@._-!#$%&*()+=<>?/\\|~^" + Space;
+    public const string LettersAndDigits = LowercaseLetters + UppercaseLetters + Digits + Space;
+    public const string AllCharacters = LowercaseLetters + UppercaseLetters + Digits + SpecialCharacters + Space;  
 }
 
 public class LobbySellectedUI : Singleton<LobbySellectedUI>
@@ -46,14 +47,6 @@ public class LobbySellectedUI : Singleton<LobbySellectedUI>
     [SerializeField] private RectTransform userContent;
     [SerializeField] private UserOnRoomUI userPrefab;
 
-
-
-    [Header("Messege")]
-
-    [Header("Messege")]
-    [SerializeField] private RectTransform messegeContent;
-    [SerializeField] private MessegeUI messegePrefab;
-
     protected override void Start()
     {
         base.Start();
@@ -65,6 +58,7 @@ public class LobbySellectedUI : Singleton<LobbySellectedUI>
         {
             LobbyManager.Instance.JoinLobby(currentRoom.id.ToString());
             LobbyManager.Instance.RefreshRoomList();
+            SceneLoader.Instance.LoadScene(SceneName.GamePlay);
         });
         OnReloadRoomBtn.onClick.AddListener(() => LobbyManager.Instance.RefreshRoomList());
 
@@ -80,6 +74,7 @@ public class LobbySellectedUI : Singleton<LobbySellectedUI>
         //    });
 
         //}
+        LobbyManager.Instance.RefreshRoomList();
     }
     private void ShowCreateRoomPopup()
     {
@@ -98,6 +93,7 @@ public class LobbySellectedUI : Singleton<LobbySellectedUI>
                 string jsonrequest = JsonConvert.SerializeObject(roomRequest);
                 LobbyManager.Instance.CreateLobby(jsonrequest);
                 LobbyManager.Instance.RefreshRoomList();
+                SceneLoader.Instance.LoadScene(SceneName.LobbyReady);
             },
             onCancel: () =>
             {
@@ -171,10 +167,5 @@ public class LobbySellectedUI : Singleton<LobbySellectedUI>
             newUser.id.text = $"userId: {user.id} name: {user.name}";
         }
     }
-    public void ShowMessege(Messege message)
-    {
-        Debug.Log("messege");
-        MessegeUI newUser = Instantiate(messegePrefab, messegeContent);
-        newUser.SetData(message);
-    }
+  
 }

@@ -82,25 +82,7 @@ public class LobbyManager : Singleton<LobbyManager>
             Debug.Log("❌ Room not found: " + response.GetValue<string>());
         });
 
-        //socket.On("chat_messege", response =>
-        //{
-        //    try
-        //    {
-        //        var json = response.GetValue<string>();
-        //        Messege messege = JsonConvert.DeserializeObject<Messege>(json);
 
-        //        Debug.Log($"Received from: {messege.userId} - {messege.username}:{messege.messege} - {messege.timestamp}");
-
-        //        MainThreadDispatcher.RunOnMainThread(() =>
-        //        {
-        //            lobbyUI.ShowMessege(messege);
-        //        });
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Debug.LogError("Error in chat_messege handler: " + ex.Message);
-        //    }
-        //});
 
         socket.On("room_list", response =>
         {
@@ -122,11 +104,8 @@ public class LobbyManager : Singleton<LobbyManager>
     }
 
 
-    public void RefreshRoomList()
-    {
-        //Debug.Log("Đang cập nhật danh sách phòng...");
-        socket.Emit("checklist_room");
-    }
+    public void RefreshRoomList() => socket.Emit("checklist_room");
+    
     public async Task<List<User>> WaitForUserListAsync(string roomId)
     {
         var tcs = new TaskCompletionSource<List<User>>();
@@ -144,25 +123,6 @@ public class LobbyManager : Singleton<LobbyManager>
         socket.On("room_getuser", handler);
 
         socket.Emit("getuser_room", roomId);
-        return await tcs.Task;
-    }
-    public async Task<Messege> WaitForUserChatAsync(string chatMessege)
-    {
-        var tcs = new TaskCompletionSource<Messege>();
-
-        Action<SocketIOResponse> handler = null;
-        handler = (response) =>
-        {
-            var json = response.GetValue<string>();
-            var messege = JsonConvert.DeserializeObject<Messege>(json);
-
-            socket.Off("chat_ack");
-            tcs.TrySetResult(messege);
-        };
-
-        socket.On("chat_ack", handler);
-        socket.Emit("chat_messege", chatMessege);
-
         return await tcs.Task;
     }
 

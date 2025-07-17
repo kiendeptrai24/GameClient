@@ -15,7 +15,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class Button_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler, IPointerDownHandler, IPointerUpHandler
+public class Button_UI : KienBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler, IPointerDownHandler, IPointerUpHandler
 {
     public enum ButtonType { Button, Toggle }
     [Header("Type of Buton")]
@@ -74,5 +74,12 @@ public class Button_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     {
         yesBehaviourToggle_Onclick = delegate () { hoverBehaviour_Image.sprite = yesBehaviour_Toggle; toggle = true; };
         noBehaviourToggle_Onclick = delegate () { hoverBehaviour_Image.sprite = noBehaviour_Toggle; toggle = false; };
+    }
+    protected override void LoadComponent()
+    {
+        base.LoadComponent();
+        hoverBehaviour_Image = GetComponent<Image>();
+        hoverBehaviour_Color_Enter = new Color(1f, 1f, 1f, 0.5f);
+        hoverBehaviour_Color_Exit = new Color(1f, 1f, 1f, 1f);
     }
 }

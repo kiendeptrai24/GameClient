@@ -1,24 +1,26 @@
-﻿using TMPro;
+﻿using System;
+using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class MessegeUI : KienBehaviour
 {
-    public TextMeshProUGUI userName;
-    public TextMeshProUGUI messege;
-    public TextMeshProUGUI timestamp;
+    public TextMeshProUGUI nameTbx;
+    public TextMeshProUGUI messegeTbx;
+    public TextMeshProUGUI timestampTbx;
     public void SetData(Messege messege)
     {
-        this.userName.text = messege.username;
-        this.messege.text = messege.messege;
-        this.timestamp.text = messege.timestamp;
+        this.nameTbx.text = messege?.username;
+        this.messegeTbx.text = messege?.messege;
+        this.timestampTbx.text = messege?.timestamp == null ? DateTime.Now.ToString() : messege.timestamp;
 
     }
     protected override void LoadComponent()
     {
-        userName = GameObject.Find("name").GetComponent<TextMeshProUGUI>();
-        messege = GameObject.Find("chat").GetComponent<TextMeshProUGUI>();
-        timestamp = GameObject.Find("timestamp").GetComponent<TextMeshProUGUI>();
+        nameTbx = GetComponentsInChildren<TextMeshProUGUI>().FirstOrDefault(x => x.name == "nameTbx");
+        messegeTbx = GetComponentsInChildren<TextMeshProUGUI>().FirstOrDefault(x => x.name == "messegeTbx");
+        timestampTbx = GetComponentsInChildren<TextMeshProUGUI>().FirstOrDefault(x => x.name == "timestampTbx");
     }
 }
 public class Messege

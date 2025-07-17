@@ -41,7 +41,6 @@ public class PopupManager : Singleton<PopupManager>
             popup.Show();
             _popupStack.Add(popup);
 
-            // Đưa popup lên trên cùng
             if (popup is MonoBehaviour mb)
             {
                 mb.transform.SetAsLastSibling();

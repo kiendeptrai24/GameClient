@@ -7,6 +7,8 @@ public abstract class BasePopup<TData, TResult> : KienBehaviour, IPopup
     where TData : IPopupData
 {
     [Header("Base Popup UI")]
+    [SerializeField] private bool closeWhenClickOkBtn = true;
+    [SerializeField] private bool closeWhenClickCancelBtn = true;
     [SerializeField] protected TextMeshProUGUI titleText;
     [SerializeField] protected Button_UI okBtn;
     [SerializeField] protected Button_UI cancelBtn;
@@ -75,6 +77,7 @@ public abstract class BasePopup<TData, TResult> : KienBehaviour, IPopup
         if (ValidateResult(result))
         {
             onConfirm?.Invoke(result);
+            if (!closeWhenClickOkBtn) return;
             PopupManager.Instance.HidePopup(this);
         }
     }
@@ -82,6 +85,7 @@ public abstract class BasePopup<TData, TResult> : KienBehaviour, IPopup
     protected virtual void OnCancelClicked()
     {
         onCancel?.Invoke();
+        if (!closeWhenClickCancelBtn) return;
         PopupManager.Instance.HidePopup(this);
     }
 

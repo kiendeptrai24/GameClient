@@ -9,6 +9,7 @@ public enum SceneName
     GamePlay,
     Options,
     Lobby,
+    LobbyReady
 }
 
 public class SceneLoader : Singleton<SceneLoader>
