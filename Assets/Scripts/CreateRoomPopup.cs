@@ -80,4 +80,14 @@ public class CreateRoomPopup : BasePopup<BasePopupData, CreateRoomData>
         maxMemberDropdown = GetComponentsInChildren<TMP_Dropdown>().FirstOrDefault(x => x.name == "maxMember");
         modeDropdown = GetComponentsInChildren<TMP_Dropdown>().FirstOrDefault(x => x.name == "mode");
     }
+
+    public override void Show()
+    {
+        PopupAnimation.ShowPopup(rect, group, 0.5f);
+    }
+
+    public override void Hide()
+    {
+        PopupAnimation.HidePopup(rect, group, 0.5f);
+    }
 }

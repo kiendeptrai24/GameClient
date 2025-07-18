@@ -13,6 +13,9 @@ public abstract class BasePopup<TData, TResult> : KienBehaviour, IPopup
     [SerializeField] protected Button_UI okBtn;
     [SerializeField] protected Button_UI cancelBtn;
     [SerializeField] protected Button_UI closeBtn;
+    [Header("Animation Popup")]
+    [SerializeField] protected RectTransform rect;
+    [SerializeField] protected CanvasGroup group;
 
     protected Action<TResult> onConfirm;
     protected Action onCancel;
@@ -22,6 +25,11 @@ public abstract class BasePopup<TData, TResult> : KienBehaviour, IPopup
     protected override void Awake()
     {
         base.Awake();
+        LoadComponent();
+        
+        if (group == null)
+            group = gameObject.AddComponent<CanvasGroup>();
+
         SetupButtons();
         Hide();
     }
@@ -34,11 +42,13 @@ public abstract class BasePopup<TData, TResult> : KienBehaviour, IPopup
             okBtn.ClickFunc = OnOkClicked;
         }
 
-        if (cancelBtn != null && closeBtn != null)
+        if (cancelBtn != null  )
         {
             cancelBtn.SetHoverBehaviourType();
             cancelBtn.ClickFunc = OnCancelClicked;
-
+        }
+        if(closeBtn != null)
+        {
             closeBtn.SetHoverBehaviourType();
             closeBtn.ClickFunc = OnCancelClicked;
         }
@@ -106,5 +116,7 @@ public abstract class BasePopup<TData, TResult> : KienBehaviour, IPopup
         okBtn = GetComponentsInChildren<Button_UI>().FirstOrDefault(x => x.name == "okBtn");
         cancelBtn = GetComponentsInChildren<Button_UI>().FirstOrDefault(x => x.name == "cancelBtn");
         closeBtn = GetComponentsInChildren<Button_UI>().FirstOrDefault(x => x.name == "closeBtn");
+        group = GetComponent<CanvasGroup>();
+        rect = GetComponent<RectTransform>();
     }
 }

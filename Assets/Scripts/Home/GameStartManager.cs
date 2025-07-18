@@ -33,8 +33,13 @@ public class GameStartManager : KienBehaviour
             yield return null;
         }
         yield return new WaitForSeconds(1f);
+        LoadingRotate.Instance.Hide();
+        FadeUI.Instance.FadeIn(
+            () => 
+            { 
+                SceneLoader.Instance.LoadScene(SceneName.GameHome); 
+            });
         
-        yield return SceneLoader.Instance.LoadScenes(SceneName.Loading);
     }
 
     protected override void LoadComponent()

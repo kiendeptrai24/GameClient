@@ -9,12 +9,18 @@ public class MessegeUI : KienBehaviour
     public TextMeshProUGUI nameTbx;
     public TextMeshProUGUI messegeTbx;
     public TextMeshProUGUI timestampTbx;
+    protected override void Start()
+    {
+        base.Start();
+        LoadComponent();
+    }
     public void SetData(Messege messege)
     {
         this.nameTbx.text = messege?.username;
         this.messegeTbx.text = messege?.messege;
-        this.timestampTbx.text = messege?.timestamp == null ? DateTime.Now.ToString() : messege.timestamp;
-
+        if (messege?.timestamp == null)
+            this.timestampTbx.text = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+        this.timestampTbx.text = TimeUtils.ToDate(messege.timestamp);
     }
     protected override void LoadComponent()
     {

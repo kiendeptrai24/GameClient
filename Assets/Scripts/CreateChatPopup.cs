@@ -2,6 +2,8 @@ using System;
 using TMPro;
 using UnityEngine;
 using System.Linq;
+using DG.Tweening;
+
 [Serializable]
 public class CreateChatData
 {
@@ -20,20 +22,26 @@ public class CreateChatData
 public class CreateChatPopup : BasePopup<BasePopupData, CreateChatData>
 {
     [SerializeField] private TMP_InputField messageTxt;
+    
+    protected override void Awake()
+    {
+        base.Awake();
+        LoadComponent();
+    }
+    protected override void Start()
+    {
+        base.Start();
+    }
     public override void Hide()
     {
-        base.Hide();
+        PopupAnimation.HidePopup(rect, group, .5f);
     }
 
     public override void Show()
     {
-        base.Show();
+        PopupAnimation.ShowPopup(rect, group, .5f);
     }
 
-    protected override void Awake()
-    {
-        base.Awake();
-    }
 
     protected override CreateChatData GetResult()
     {
@@ -41,13 +49,7 @@ public class CreateChatPopup : BasePopup<BasePopupData, CreateChatData>
         return new CreateChatData("","", message, "");
     }
 
-    protected override void LoadComponent()
-    {
-        base.LoadComponent();
-        messageTxt = GetComponentsInChildren<TMP_InputField>().FirstOrDefault(x => x.name == "messageTxt");
-        okBtn = GetComponentsInChildren<Button_UI>().FirstOrDefault(x => x.name == "okBtn");
-        closeBtn = GetComponentsInChildren<Button_UI>().FirstOrDefault(x => x.name == "closeBtn");
-    }
+    public void SetChatMessage(string message) => messageTxt.text = message;
     protected override void SetupPopupData(BasePopupData data)
     {
         base.SetupPopupData(data);
@@ -67,10 +69,6 @@ public class CreateChatPopup : BasePopup<BasePopupData, CreateChatData>
     }
 
 
-    protected override void Start()
-    {
-        base.Start();
-    }
 
     protected override bool ValidateResult(CreateChatData result)
     {
@@ -80,5 +78,12 @@ public class CreateChatPopup : BasePopup<BasePopupData, CreateChatData>
             return false;
         }
         return true;
+    }
+    protected override void LoadComponent()
+    {
+        base.LoadComponent();
+        messageTxt = GetComponentsInChildren<TMP_InputField>().FirstOrDefault(x => x.name == "messageTxt");
+        okBtn = GetComponentsInChildren<Button_UI>().FirstOrDefault(x => x.name == "okBtn");
+        closeBtn = GetComponentsInChildren<Button_UI>().FirstOrDefault(x => x.name == "closeBtn");
     }
 }

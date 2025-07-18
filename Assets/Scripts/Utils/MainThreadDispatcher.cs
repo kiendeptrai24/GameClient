@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MainThreadDispatcher : KienBehaviour
 {
@@ -28,5 +29,19 @@ public class MainThreadDispatcher : KienBehaviour
                 action?.Invoke();
             }
         }
+    }
+    private void OnEnable()
+    {
+        SceneManager.activeSceneChanged += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.activeSceneChanged -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene arg0, Scene arg1)
+    {
+        mainThreadQueue.Clear();
     }
 }

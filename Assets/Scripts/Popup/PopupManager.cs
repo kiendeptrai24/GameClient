@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PopupManager : Singleton<PopupManager>
 {
@@ -72,5 +73,19 @@ public class PopupManager : Singleton<PopupManager>
             popup.Hide();
         }
         _popupStack.Clear();
+    }
+    private void OnEnable()
+    {
+        SceneManager.activeSceneChanged += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.activeSceneChanged -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene arg0, Scene arg1)
+    {
+        RegisterAllPopups();
     }
 }

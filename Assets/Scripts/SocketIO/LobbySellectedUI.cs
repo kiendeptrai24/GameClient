@@ -92,7 +92,7 @@ public class LobbySellectedUI : Singleton<LobbySellectedUI>
                 RoomRequestDTO roomRequest = new RoomRequestDTO(result.roomId, result.mode, result.maxMember);
                 string jsonrequest = JsonConvert.SerializeObject(roomRequest);
                 LobbyManager.Instance.CreateLobby(jsonrequest);
-                LobbyManager.Instance.RefreshRoomList();
+                //LobbyManager.Instance.RefreshRoomList();
                 SceneLoader.Instance.LoadScene(SceneName.LobbyReady);
             },
             onCancel: () =>

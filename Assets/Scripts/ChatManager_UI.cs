@@ -27,16 +27,18 @@ public class ChatManager_UI : Singleton<ChatManager_UI>
         var data = new BasePopupData("CHAT ROOM")
         {
             ValidCharacters = CharacterGroups.AllCharacters,
-            CharacterLimit = 20
+            CharacterLimit = 50
         };
         popup?.ShowPopup(data,
             onConfirm: (CreateChatData result) =>
             {
                 ChatManager.Instance.ChatMessage(result.message);
+                popup.SetChatMessage(string.Empty);
             },
             onCancel: () =>
             {
                 Debug.Log("Create room cancelled");
+                popup.SetChatMessage(string.Empty);
             }
         );
     }
