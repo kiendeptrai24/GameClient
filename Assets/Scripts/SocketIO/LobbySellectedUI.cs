@@ -16,6 +16,7 @@ public static class CharacterGroups
     public const string SpecialCharacters = "@._-!#$%&*()+=<>?/\\|~^" + Space;
     public const string LettersAndDigits = LowercaseLetters + UppercaseLetters + Digits + Space;
     public const string AllCharacters = LowercaseLetters + UppercaseLetters + Digits + SpecialCharacters + Space;
+    public const string Email = LowercaseLetters + UppercaseLetters + Digits + "@";
 }
 
 public class LobbySellectedUI : Singleton<LobbySellectedUI>

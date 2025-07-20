@@ -39,6 +39,7 @@ public class CreateChatPopup : BasePopup<BasePopupData, CreateChatData>
 
     public override void Show()
     {
+        base.Show();
         PopupAnimation.ShowPopup(rect, group, .5f);
     }
 

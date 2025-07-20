@@ -83,6 +83,7 @@ public class CreateRoomPopup : BasePopup<BasePopupData, CreateRoomData>
 
     public override void Show()
     {
+        base.Show();
         PopupAnimation.ShowPopup(rect, group, 0.5f);
     }
 

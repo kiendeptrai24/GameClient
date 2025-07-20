@@ -1,18 +1,27 @@
 using System.Collections;
 using System.Linq;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class GameStartManager : KienBehaviour
 {
+    [Header("Btn Setup")]
     [SerializeField] private Button OnHomePage;
-    [SerializeField] private Transform Loading;
+    [Header("Icon")]
+    [SerializeField] private Image wifiOnImg;
+    [SerializeField] private Image wifiOffImg;
+    [Header("Connect server")]
+    [SerializeField] private Transform fadeGo;
+    [SerializeField] private Transform loadingGo;
     [SerializeField] private GameObject networkManager;
     protected override void Awake()
     {
         base.Awake();
+        fadeGo.gameObject.SetActive(true);
+        StartCoroutine(ConnectInternet());
         OnHomePage.onClick.AddListener(() =>
         {
             OnStartGameButtonClicked();
@@ -22,10 +31,19 @@ public class GameStartManager : KienBehaviour
     {
         StartCoroutine(ConnectAndLoadGame());
     }
+    private IEnumerator ConnectInternet()
+    {
+        while (!NetworkCheck.IsInternetAvailable())
+        {
+            yield return null;
+        }
+        wifiOffImg.gameObject.SetActive(false);
+        wifiOnImg.gameObject.SetActive(true);
+    }
     private IEnumerator ConnectAndLoadGame()
     {
-        Loading.gameObject.SetActive(true);
         networkManager.SetActive(true);
+        loadingGo.gameObject.SetActive(true);
         NetworkManager.Instance.OnConnectToServer();
 
         while (!NetworkManager.Instance.IsConnected)
@@ -35,17 +53,25 @@ public class GameStartManager : KienBehaviour
         yield return new WaitForSeconds(1f);
         LoadingRotate.Instance.Hide();
         FadeUI.Instance.FadeIn(
-            () => 
-            { 
-                SceneLoader.Instance.LoadScene(SceneName.GameHome); 
-            });
-        
+        () =>
+        {
+            SceneLoader.Instance.LoadScene(SceneName.GameHome);
+        });
+
     }
 
     protected override void LoadComponent()
     {
         base.LoadComponent();
-        OnHomePage = GetComponentsInChildren<Button>().FirstOrDefault(btn => btn.gameObject.name == "OnHomePage");
+        OnHomePage = GetComponentsInChildren<Button>(true).FirstOrDefault(btn => btn.gameObject.name == "OnHomePage");
+
+
+        wifiOffImg = GetComponentsInChildren<Image>(true).FirstOrDefault(img => img.gameObject.name == "wifiOffImg");
+        wifiOnImg = GetComponentsInChildren<Image>(true).FirstOrDefault(img => img.gameObject.name == "wifiOnImg");
+
+        loadingGo = GetComponentsInChildren<Transform>(true).FirstOrDefault(btn => btn.gameObject.name == "loadingGo");
+        fadeGo = GetComponentsInChildren<Transform>(true).FirstOrDefault(btn => btn.gameObject.name == "fadeGo");
+        networkManager = FindAnyObjectByType<NetworkManager>().gameObject;
     }
 
     protected override void Start()

@@ -25,6 +25,7 @@ public class CreateSignInPopup : BasePopup<BasePopupData, CreateSignInData>
 
     public override void Show()
     {
+        base.Show();
         PopupAnimation.ShowPopup(rect, group, .5f);
     }
 

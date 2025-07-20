@@ -9,7 +9,6 @@ public static class PopupAnimation
         canvasGroup.alpha = 0f;
         canvasGroup.blocksRaycasts = true;
         canvasGroup.interactable = true;
-        target.gameObject.SetActive(true);
 
         target.DOScale(Vector3.one, duration).SetEase(Ease.OutBack);
         canvasGroup.DOFade(1f, duration);
