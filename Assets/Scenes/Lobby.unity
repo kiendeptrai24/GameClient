@@ -5121,50 +5121,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1960654984}
   m_CullTransparentMesh: 1
---- !u!1 &1964602097
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1964602099}
-  - component: {fileID: 1964602098}
-  m_Layer: 0
-  m_Name: '*** MainThreadManager ***'
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1964602098
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1964602097}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 06c20c9887548784483ed214922692f9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &1964602099
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1964602097}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 169.65857, y: 228.32124, z: -0.14630291}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &1969019850 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2133209083467993937, guid: 2411031466f98f24db471f4484f1cc15, type: 3}
@@ -16263,8 +16219,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5263345361502690945}
   - component: {fileID: 5263345361502690946}
+  - component: {fileID: 5263345361502690947}
   m_Layer: 5
-  m_Name: Popup_SignUp
+  m_Name: Popup_Lobby
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16309,9 +16266,23 @@ MonoBehaviour:
   okBtn: {fileID: 5263345361324546742}
   cancelBtn: {fileID: 1784544174}
   closeBtn: {fileID: 5263345361438462420}
+  rect: {fileID: 5263345361502690945}
+  group: {fileID: 5263345361502690947}
   roomIdInput: {fileID: 104773341559507364}
-  maxMemberDropdown: {fileID: 0}
+  maxMemberDropdown: {fileID: 1834930685}
   modeDropdown: {fileID: 1500552487}
+--- !u!225 &5263345361502690947
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5263345361502690944}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!222 &5263345361520185380
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -21326,7 +21297,6 @@ SceneRoots:
   - {fileID: 330585546}
   - {fileID: 410087041}
   - {fileID: 832575519}
-  - {fileID: 1964602099}
   - {fileID: 589443389}
   - {fileID: 2357484002797229516}
   - {fileID: 1017428098}

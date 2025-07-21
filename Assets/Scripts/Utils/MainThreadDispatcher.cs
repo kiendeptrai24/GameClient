@@ -44,4 +44,8 @@ public class MainThreadDispatcher : KienBehaviour
     {
         mainThreadQueue.Clear();
     }
+    public static void OnClearRoomInfo()
+    {
+        mainThreadQueue.Clear();
+    }
 }

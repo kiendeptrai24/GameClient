@@ -133,4 +133,8 @@ public class LobbyManager : Singleton<LobbyManager>
 
     public List<User> GetUserOnRooms() => userList;
     public List<Room> GetAllRooms() => rooms;
+    private void OnDestroy()
+    {
+        MainThreadDispatcher.OnClearRoomInfo();
+    }
 }

@@ -44,6 +44,6 @@ public class Validator : MonoBehaviour
 
     public static bool IsValidLogin(string email, string password)
     {
-        return IsValidEmail(email) && IsValidPassword(password);
+        return IsValidPassword(password);
     }
 }

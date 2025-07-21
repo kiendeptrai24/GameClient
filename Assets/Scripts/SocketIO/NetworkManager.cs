@@ -40,11 +40,16 @@ public class NetworkManager : Singleton<NetworkManager>
             Debug.Log("Connected to server");
             IsConnected = true;
         };
-
+        
         socket.OnDisconnected += (sender, e) =>
         {
             Debug.Log("Disconnected from server");
         };
+        socket.On("authen_token", response =>
+        {
+            Debug.Log(response.ToString());
+            //UserSession.SetToken(null);
+        });
         socket.On("another_user_login", response =>
         {
            
@@ -89,7 +94,6 @@ public class NetworkManager : Singleton<NetworkManager>
     }
     public void getposition(Vector3 vector3)
     {
-        Debug.Log("player_input");
 
         var transformDelta = new TransformDeltaPacket
         {

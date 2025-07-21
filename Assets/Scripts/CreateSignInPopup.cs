@@ -15,11 +15,12 @@ public class CreateSignInData
 }
 public class CreateSignInPopup : BasePopup<BasePopupData, CreateSignInData>
 {
-    [SerializeField] private TMP_InputField emailTbx { get; set; }
-    [SerializeField] private TMP_InputField passwordTbx { get; set; }
+    [SerializeField] private TMP_InputField usernameTbx;
+    [SerializeField] private TMP_InputField passwordTbx;
 
     public override void Hide()
     {
+        //base.Hide();
         PopupAnimation.HidePopup(rect, group, .5f);
     }
 
@@ -40,7 +41,7 @@ public class CreateSignInPopup : BasePopup<BasePopupData, CreateSignInData>
     }
     protected override CreateSignInData GetResult()
     {
-        string email = emailTbx?.text ?? "";
+        string email = usernameTbx?.text ?? "";
         string password = passwordTbx?.text ?? "";
         return new CreateSignInData(email, password);
     }
@@ -48,7 +49,7 @@ public class CreateSignInPopup : BasePopup<BasePopupData, CreateSignInData>
     protected override void LoadComponent()
     {
         base.LoadComponent();
-        emailTbx = GetComponentsInChildren<TMP_InputField>().FirstOrDefault(x => x.name == "emailTbx");
+        usernameTbx = GetComponentsInChildren<TMP_InputField>().FirstOrDefault(x => x.name == "usernameTbx");
         passwordTbx = GetComponentsInChildren<TMP_InputField>().FirstOrDefault(x => x.name == "passwordTbx");
     }
 
@@ -65,23 +66,23 @@ public class CreateSignInPopup : BasePopup<BasePopupData, CreateSignInData>
     protected override void SetupPopupData(BasePopupData data)
     {
         base.SetupPopupData(data);
-        if (emailTbx != null)
+        if (usernameTbx != null)
         {
-            emailTbx.characterLimit = data.CharacterLimit;
-            emailTbx.text = "";
+            usernameTbx.characterLimit = data.CharacterLimit;
+            //usernameTbx.text = "";
 
             if (!string.IsNullOrEmpty(data.ValidCharacters))
             {
-                emailTbx.onValidateInput = (string text, int charIndex, char addedChar) =>
+                usernameTbx.onValidateInput = (string text, int charIndex, char addedChar) =>
                     ValidateChar(data.ValidCharacters, addedChar);
             }
 
-            emailTbx.Select();
+            usernameTbx.Select();
         }
         if (passwordTbx != null)
         {
             passwordTbx.characterLimit = data.CharacterLimit;
-            passwordTbx.text = "";
+            //passwordTbx.text = "";
 
             if (!string.IsNullOrEmpty(data.ValidCharacters))
             {

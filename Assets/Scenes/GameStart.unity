@@ -986,13 +986,13 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 5783675431198773964}
+  - {fileID: 3874820066132769608}
   - {fileID: 624558798}
   - {fileID: 832957305}
   - {fileID: 210330937}
   - {fileID: 2120041874}
   - {fileID: 24272809}
-  - {fileID: 3874820066132769608}
-  - {fileID: 5783675431198773964}
   m_Father: {fileID: 1852504199}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -1012,7 +1012,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d2d50988e784ea4eab45e28f3edb07c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnHomePage: {fileID: 9193089365804345204}
   wifiOnImg: {fileID: 1178542122285876461}
   wifiOffImg: {fileID: 119911936}
   fadeGo: {fileID: 624558798}
@@ -1030,6 +1029,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40c82dc4d24c80448850cb6d07221b47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnHomePage: {fileID: 9193089365804345204}
   OnSignGarenaBtn: {fileID: 8738347522296792377}
   OnSignGuestBtn: {fileID: 8848655286437868387}
 --- !u!114 &675520131
@@ -1044,6 +1044,50 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58475c3b49219ff4fbadef1c84e36804, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &684651343
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 684651345}
+  - component: {fileID: 684651344}
+  m_Layer: 0
+  m_Name: '*** MainThreadManager ***'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &684651344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 684651343}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06c20c9887548784483ed214922692f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &684651345
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 684651343}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 454.08176, y: 269.54773, z: 2.7210784}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &771246741
 GameObject:
   m_ObjectHideFlags: 0
@@ -1073,7 +1117,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a81c533f30168c645b624504db6c71a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isConnect: 0
+  isConnect: 1
   apiServer: https://perfectly-kind-toucan.ngrok-free.app
   thirdPersonController: {fileID: 0}
   Owner:
@@ -3694,7 +3738,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &3874820066132769616
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3715,6 +3759,8 @@ MonoBehaviour:
   closeBtn: {fileID: 3874820066537471628}
   rect: {fileID: 3874820066132769608}
   group: {fileID: 3874820066132769617}
+  usernameTbx: {fileID: 0}
+  passwordTbx: {fileID: 0}
 --- !u!225 &3874820066132769617
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -4283,7 +4329,7 @@ GameObject:
   - component: {fileID: 3874820066444351887}
   - component: {fileID: 3874820066444351886}
   m_Layer: 5
-  m_Name: InputField (TMP)
+  m_Name: usernameTbx
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4305,9 +4351,9 @@ RectTransform:
   - {fileID: 3874820066169658320}
   m_Father: {fileID: 3874820067988868257}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 312.00006, y: -50}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 624.0001, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &3874820066444351886
@@ -4396,7 +4442,7 @@ MonoBehaviour:
   m_CaretColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_CustomCaretColor: 0
   m_SelectionColor: {r: 0.65882355, g: 0.80784315, b: 1, a: 0.7529412}
-  m_Text: LayerLab
+  m_Text: john_doe
   m_CaretBlinkRate: 0.85
   m_CaretWidth: 1
   m_ReadOnly: 0
@@ -4532,8 +4578,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   btnType: 0
   hoverBehaviour_Image: {fileID: 3874820066537471622}
-  hoverBehaviour_Color_Enter: {r: 1, g: 1, b: 1, a: 0.5}
-  hoverBehaviour_Color_Exit: {r: 1, g: 1, b: 1, a: 1}
+  hoverBehaviour_Color_Enter: {r: 0.09411765, g: 0.08235294, b: 0.12156863, a: 0.5}
+  hoverBehaviour_Color_Exit: {r: 0.09411765, g: 0.08235294, b: 0.12156863, a: 1}
   toggle: 1
   yesBehaviour_Toggle: {fileID: 0}
   noBehaviour_Toggle: {fileID: 0}
@@ -5079,7 +5125,7 @@ MonoBehaviour:
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: 0
+  m_TextStyleHashCode: -1183493901
   m_overrideHtmlColors: 0
   m_faceColor:
     serializedVersion: 2
@@ -5154,7 +5200,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3874820067165970603}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
@@ -5414,7 +5460,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u200B"
+  m_text: "******\u200B"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d70f485aa27dc43f79a8fd168f58435c, type: 2}
   m_sharedMaterial: {fileID: 5416806443266638455, guid: d70f485aa27dc43f79a8fd168f58435c, type: 2}
@@ -5891,7 +5937,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "LayerLab\u200B"
+  m_text: "john_doe\u200B"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d70f485aa27dc43f79a8fd168f58435c, type: 2}
   m_sharedMaterial: {fileID: 5416806443266638455, guid: d70f485aa27dc43f79a8fd168f58435c, type: 2}
@@ -5983,7 +6029,7 @@ GameObject:
   - component: {fileID: 3874820067964979389}
   - component: {fileID: 3874820067964979388}
   m_Layer: 5
-  m_Name: InputField (TMP)
+  m_Name: passwordTbx
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6005,9 +6051,9 @@ RectTransform:
   - {fileID: 3874820066269803126}
   m_Father: {fileID: 3874820067988868257}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 312.00006, y: -175}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 624.0001, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &3874820067964979388
@@ -6096,7 +6142,7 @@ MonoBehaviour:
   m_CaretColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_CustomCaretColor: 0
   m_SelectionColor: {r: 0.65882355, g: 0.80784315, b: 1, a: 0.7529412}
-  m_Text: 
+  m_Text: 123456
   m_CaretBlinkRate: 0.85
   m_CaretWidth: 1
   m_ReadOnly: 0
@@ -6367,7 +6413,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: -170}
-  m_SizeDelta: {x: 624.0001, y: 225}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &3874820067988868258
 MonoBehaviour:
@@ -7669,6 +7715,7 @@ SceneRoots:
   - {fileID: 330585546}
   - {fileID: 410087041}
   - {fileID: 832575519}
+  - {fileID: 684651345}
   - {fileID: 771246743}
   - {fileID: 1852504199}
   - {fileID: 1361738450}

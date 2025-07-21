@@ -26,10 +26,6 @@ public abstract class BasePopup<TData, TResult> : KienBehaviour, IPopup
     {
         base.Awake();
         LoadComponent();
-        
-        if (group == null)
-            group = gameObject.AddComponent<CanvasGroup>();
-
         SetupButtons();
         Hide();
     }

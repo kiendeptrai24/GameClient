@@ -1,15 +1,15 @@
 using System.Collections;
 using System.Linq;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Newtonsoft.Json;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameStartManager : KienBehaviour
+public class GameStartManager : Singleton<GameStartManager>
 {
-    [Header("Btn Setup")]
-    [SerializeField] private Button OnHomePage;
+    
     [Header("Icon")]
     [SerializeField] private Image wifiOnImg;
     [SerializeField] private Image wifiOffImg;
@@ -17,15 +17,16 @@ public class GameStartManager : KienBehaviour
     [SerializeField] private Transform fadeGo;
     [SerializeField] private Transform loadingGo;
     [SerializeField] private GameObject networkManager;
+    private string token = "";
+    private const string KEYTOKEN = "token";
     protected override void Awake()
     {
         base.Awake();
+        token = PlayerPrefs.GetString(token);
+        PlayerPrefs.SetString(KEYTOKEN, token);
         fadeGo.gameObject.SetActive(true);
         StartCoroutine(ConnectInternet());
-        OnHomePage.onClick.AddListener(() =>
-        {
-            OnStartGameButtonClicked();
-        });
+        
     }
     public void OnStartGameButtonClicked()
     {
@@ -63,8 +64,6 @@ public class GameStartManager : KienBehaviour
     protected override void LoadComponent()
     {
         base.LoadComponent();
-        OnHomePage = GetComponentsInChildren<Button>(true).FirstOrDefault(btn => btn.gameObject.name == "OnHomePage");
-
 
         wifiOffImg = GetComponentsInChildren<Image>(true).FirstOrDefault(img => img.gameObject.name == "wifiOffImg");
         wifiOnImg = GetComponentsInChildren<Image>(true).FirstOrDefault(img => img.gameObject.name == "wifiOnImg");

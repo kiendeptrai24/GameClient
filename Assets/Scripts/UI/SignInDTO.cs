@@ -2,11 +2,11 @@
 [System.Serializable]
 public class SignInDTO
 {
-    public string email;
+    public string username;
     public string password;
     public SignInDTO(string email, string password)
     {
-        this.email = email;
+        this.username = email;
         this.password = password;
     }
 }
