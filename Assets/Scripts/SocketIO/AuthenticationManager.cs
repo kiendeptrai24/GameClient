@@ -21,12 +21,6 @@ public class AuthenticationManager : KienBehaviour
     }
     private void AddListenerEvent()
     {
-        if (NetworkManager.socket == null)
-        {
-            Debug.Log("Socket not initialized");
-            return;
-        }
-
         socket = NetworkManager.socket;
 
         listenerEventSockeIO();
@@ -99,12 +93,12 @@ public class AuthenticationManager : KienBehaviour
             });
             socket.On("auto_login_result", response =>
             {
-                Debug.Log("auto login result " + response.GetValue<string>());
+                Debug.Log("auto login result ");
                 MainThreadDispatcher.RunOnMainThread(() => { Authentication_UI.SetUpStartGameReaddyUI(); });
             });
             socket.On("user_online", response =>
             {
-                Debug.Log("user online: " + response.GetValue<string>());
+                Debug.Log("user online: ");
             });
         };
 

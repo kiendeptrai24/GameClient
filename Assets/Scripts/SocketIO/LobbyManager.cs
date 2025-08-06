@@ -12,6 +12,8 @@ public class User
     public string id;
     public string name;
     public string room;
+
+    public bool isLocal;
 }
 
 public class LobbyManager : Singleton<LobbyManager>
@@ -130,6 +132,7 @@ public class LobbyManager : Singleton<LobbyManager>
     public void KickPlayerLobby(string roomId) => socket.Emit("kickplayer_room", roomId);
     public void GetUsersOnLobby(string roomId) => socket.Emit("getuser_room", roomId);
     public void ChatOnLobby(string messege) => socket.Emit("chat_messege", messege);
+    public void StartGame(string messege) => socket.Emit("start_game", messege);
 
     public List<User> GetUserOnRooms() => userList;
     public List<Room> GetAllRooms() => rooms;
