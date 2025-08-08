@@ -72,7 +72,6 @@ public class NetworkManager : Singleton<NetworkManager>
                 {
 
                     string json = response.GetValue().ToString();
-                    Debug.Log(json);
                     TransformDeltaPacket packet = JsonConvert.DeserializeObject<TransformDeltaPacket>(json);
 
                     Vector3 pos = new Vector3(packet.delta.position.x, packet.delta.position.y, packet.delta.position.z);
@@ -124,6 +123,7 @@ public class NetworkManager : Singleton<NetworkManager>
         listUser.Add(user);
         GameObject newUser = Instantiate(player, transform.position, Quaternion.identity);
         KienNetworkBehaviour userScript = newUser.GetComponent<KienNetworkBehaviour>();
+
         NetworkTransform clientTransform = newUser.GetComponent<NetworkTransform>();
         if(clientTransform != null) 
         { 
@@ -133,6 +133,7 @@ public class NetworkManager : Singleton<NetworkManager>
         foreach (KienNetworkBehaviour component in components)
         {
             component.User = user;
+            component.NetworkId = user.id;
         }
         userScript.User = user;
         userScript.NetworkId = user.id;
@@ -152,8 +153,8 @@ public class NetworkManager : Singleton<NetworkManager>
         {
             newTransform = new
             {
-                position = new Vector3Data { x = vector3.x, y = 0f, z = vector3.z },
-                rotation = new Vector3Data { x = 0f, y = 90f, z = 0f },
+                position = new Vector3Data { x = vector3.x, y = vector3.y, z = vector3.z },
+                rotation = new Vector3Data { x = 0f, y = 0f, z = 0f },
                 scale = new Vector3Data { x = 1f, y = 1f, z = 1f },
                 velocity = new Vector3Data { x = 1f, y = 0f, z = 0f },
                 angularVelocity = new Vector3Data { x = 0f, y = 5f, z = 0f }
@@ -177,7 +178,6 @@ public class DeltaData
 {
     public Vector3Data position { get; set; }
     public Vector3Data rotation { get; set; }
-    public Vector3Data velocity { get; set; }
 }
 
 public class Vector3Data

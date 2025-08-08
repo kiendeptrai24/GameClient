@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QFSW.QC;
+using System;
 using UnityEngine;
 
 public class NetworkTransform : KienNetworkBehaviour
@@ -32,6 +33,7 @@ public class NetworkTransform : KienNetworkBehaviour
             transform.position = Vector3.Lerp(transform.position, position, 0.5f);
             transform.rotation = Quaternion.Lerp(transform.rotation, rotation, 0.5f);
         }
+
     }
 
 }
