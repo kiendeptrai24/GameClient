@@ -10,7 +10,7 @@ public class NetworkManager : Singleton<NetworkManager>
     public static SocketIOUnity socket;
     [SerializeField] private bool isConnect = false;
     [SerializeField] private string apiServer = "https://perfectly-kind-toucan.ngrok-free.app";
-    [SerializeField] private GameObject player;
+    public GameObject player;
     [Header("User Manager")]
     public User Owner;
     public bool IsOwner => Owner != null;
@@ -19,7 +19,7 @@ public class NetworkManager : Singleton<NetworkManager>
     public List<User> listUser = new List<User>();
     public List<NetworkTransform> clientTransforms = new List<NetworkTransform>();
 
-    public event Action OnSpawn;
+    public event Action<User> OnSpawn;
     protected override void Awake()
     {
         if (isConnect)
@@ -35,7 +35,6 @@ public class NetworkManager : Singleton<NetworkManager>
 
         socket.OnConnected += (sender, e) =>
         {
-            OnSpawn?.Invoke();
 
             Debug.Log("Connected to server");
             IsConnected = true;
@@ -64,7 +63,22 @@ public class NetworkManager : Singleton<NetworkManager>
                 user.isLocal = true;
                 Owner = user;
                 Debug.Log("User login succsecful: " + user.name);
-                MainThreadDispatcher.RunOnMainThread(() => AddNewPlayer(user));
+                AddNewPlayer(user);
+                socket.Emit("getalluser", "");
+            });
+            socket.On("getalluser", response =>
+            {
+                Debug.Log("getalluser");
+                string json = response.GetValue().ToString();
+                var allUser = JsonConvert.DeserializeObject<List<User>>(json);
+                foreach (var user in allUser)
+                {
+                    if(Owner.id != user.id)
+                    {
+                        AddNewPlayer(user);
+                    }
+                }
+
             });
             socket.On("transform_delta", response =>
             {
@@ -90,7 +104,7 @@ public class NetworkManager : Singleton<NetworkManager>
                     Debug.Log(ex.ToString());
                 }
             });
-
+          
             socket.On("anim_update", response =>
             {
                 string json = response.GetValue<string>();
@@ -100,7 +114,7 @@ public class NetworkManager : Singleton<NetworkManager>
                 {
                     if (NetworkObject.AllObjects.TryGetValue(packet.id, out var netObj))
                     {
-                        var netAnimator = netObj.GetComponent<KienNetworkAnimator>();
+                        var netAnimator = netObj.GetComponent<NetworkAnimator>();
                         if (netAnimator != null)
                             netAnimator.ApplyAnimUpdate(packet.type, packet.name, packet.val);
                     }
@@ -115,28 +129,15 @@ public class NetworkManager : Singleton<NetworkManager>
 
         socket.Connect();
     }
-
+    protected override void OnApplicationQuit()
+    {
+        socket.Emit("disconnect", "");
+        socket.Disconnect();
+    }
     private void AddNewPlayer(User user)
     {
-        
         users.Add(user.id, user);
         listUser.Add(user);
-        GameObject newUser = Instantiate(player, transform.position, Quaternion.identity);
-        KienNetworkBehaviour userScript = newUser.GetComponent<KienNetworkBehaviour>();
-
-        NetworkTransform clientTransform = newUser.GetComponent<NetworkTransform>();
-        if(clientTransform != null) 
-        { 
-            clientTransforms.Add(clientTransform);
-        }
-        var components = newUser.GetComponents<KienNetworkBehaviour>();
-        foreach (KienNetworkBehaviour component in components)
-        {
-            component.User = user;
-            component.NetworkId = user.id;
-        }
-        userScript.User = user;
-        userScript.NetworkId = user.id;
     }
     private void Connecting()
     {

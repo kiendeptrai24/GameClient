@@ -5,15 +5,29 @@ using SocketIOClient;
 using System.Threading.Tasks;
 using System;
 using System.Collections;
+using static UnityEngine.UI.GridLayoutGroup;
 
 [System.Serializable]
 public class User
 {
     public string id;
     public string name;
-    public string room;
+    public string roomId;
 
     public bool isLocal;
+}
+[System.Serializable]
+public class RoomData
+{
+    public string id;
+    public string name;
+    public User host;
+    public string mode;
+    public int max;
+    public List<User> members;
+    public string status;
+    public long createdAt;
+    public Dictionary<string, object> settings;
 }
 
 public class LobbyManager : Singleton<LobbyManager>
@@ -56,12 +70,30 @@ public class LobbyManager : Singleton<LobbyManager>
     {
         socket.On("room_created", response =>
         {
-            Debug.Log("Room created: " + response.GetValue<string>());
+            var json = response.GetValue().ToString();
+            Debug.Log("Room created: " + json);
+            var roomData = JsonConvert.DeserializeObject<RoomData>(json);
+            MainThreadDispatcher.RunOnMainThread(() =>
+            {
+                NetworkManager.Instance.Owner.roomId = roomData.host.roomId;
+                if (NetworkManager.Instance.users.TryGetValue(roomData.host.id, out var existingUser))
+                {
+                    existingUser.roomId = roomData.host.roomId;
+                }
+            });
         });
 
         socket.On("player_joined", response =>
         {
-            Debug.Log("Player joined: " + response.GetValue<string>());
+            var json = response.GetValue().ToString();
+            var user = JsonConvert.DeserializeObject<User>(json);
+            MainThreadDispatcher.RunOnMainThread(() =>
+            {
+                if (NetworkManager.Instance.users.TryGetValue(user.id, out var existingUser))
+                {
+                    existingUser.roomId = user.roomId;
+                }
+            });
         });
 
         socket.On("room_exists", response =>
